@@ -1,56 +1,73 @@
-# Real-Time Voice Cloning
-This repository is an implementation of [Transfer Learning from Speaker Verification to
-Multispeaker Text-To-Speech Synthesis](https://arxiv.org/pdf/1806.04558.pdf) (SV2TTS) with a vocoder that works in real-time. This was my [master's thesis](https://matheo.uliege.be/handle/2268.2/6801).
-
-SV2TTS is a deep learning framework in three stages. In the first stage, one creates a digital representation of a voice from a few seconds of audio. In the second and third stages, this representation is used as reference to generate speech given arbitrary text.
-
-**Video demonstration** (click the picture):
-
-[![Toolbox demo](https://i.imgur.com/8lFUlgz.png)](https://www.youtube.com/watch?v=-O_hYhToKoA)
-
-
-
-### Papers implemented  
-| URL | Designation | Title | Implementation source |
-| --- | ----------- | ----- | --------------------- |
-|[**1806.04558**](https://arxiv.org/pdf/1806.04558.pdf) | **SV2TTS** | **Transfer Learning from Speaker Verification to Multispeaker Text-To-Speech Synthesis** | This repo |
-|[1802.08435](https://arxiv.org/pdf/1802.08435.pdf) | WaveRNN (vocoder) | Efficient Neural Audio Synthesis | [fatchord/WaveRNN](https://github.com/fatchord/WaveRNN) |
-|[1703.10135](https://arxiv.org/pdf/1703.10135.pdf) | Tacotron (synthesizer) | Tacotron: Towards End-to-End Speech Synthesis | [fatchord/WaveRNN](https://github.com/fatchord/WaveRNN)
-|[1710.10467](https://arxiv.org/pdf/1710.10467.pdf) | GE2E (encoder)| Generalized End-To-End Loss for Speaker Verification | This repo |
-
-## Heads up
-Like everything else in Deep Learning, this repo is quickly getting old. Many other open-source repositories or SaaS apps (often paying) will give you a better audio quality than this repository will. If you care about the fidelity of the voice you're cloning, and its expressivity, here are some personal recommendations of alternative voice cloning solutions:
-- Check out [CoquiTTS](https://github.com/coqui-ai/tts) for an open source repository that is more up-to-date, with a better voice cloning quality and more functionalities.
-- Check out [paperswithcode](https://paperswithcode.com/task/speech-synthesis/) for other repositories and recent research in the field of speech synthesis.
-- Check out [Resemble.ai](https://www.resemble.ai/) (disclaimer: I work there) for state of the art voice cloning with little hassle.
-
-## Setup
-
-### 1. Install Requirements
-1. Both Windows and Linux are supported. A GPU is recommended for training and for inference speed, but is not mandatory.
-2. Python 3.7 is recommended. Python 3.5 or greater should work, but you'll probably have to tweak the dependencies' versions. I recommend setting up a virtual environment using `venv`, but this is optional.
-3. Install [ffmpeg](https://ffmpeg.org/download.html#get-packages). This is necessary for reading audio files.
-4. Install [PyTorch](https://pytorch.org/get-started/locally/). Pick the latest stable version, your operating system, your package manager (pip by default) and finally pick any of the proposed CUDA versions if you have a GPU, otherwise pick CPU. Run the given command.
-5. Install the remaining requirements with `pip install -r requirements.txt`
-
-### 2. (Optional) Download Pretrained Models
-Pretrained models are now downloaded automatically. If this doesn't work for you, you can manually download them [here](https://github.com/CorentinJ/Real-Time-Voice-Cloning/wiki/Pretrained-models).
-
-### 3. (Optional) Test Configuration
-Before you download any dataset, you can begin by testing your configuration with:
-
-`python demo_cli.py`
-
-If all tests pass, you're good to go.
-
-### 4. (Optional) Download Datasets
-For playing with the toolbox alone, I only recommend downloading [`LibriSpeech/train-clean-100`](https://www.openslr.org/resources/12/train-clean-100.tar.gz). Extract the contents as `<datasets_root>/LibriSpeech/train-clean-100` where `<datasets_root>` is a directory of your choosing. Other datasets are supported in the toolbox, see [here](https://github.com/CorentinJ/Real-Time-Voice-Cloning/wiki/Training#datasets). You're free not to download any dataset, but then you will need your own data as audio files or you will have to record it with the toolbox.
-
-### 5. Launch the Toolbox
-You can then try the toolbox:
-
-`python demo_toolbox.py -d <datasets_root>`  
-or  
-`python demo_toolbox.py`  
-
-depending on whether you downloaded any datasets. If you are running an X-server or if you have the error `Aborted (core dumped)`, see [this issue](https://github.com/CorentinJ/Real-Time-Voice-Cloning/issues/11#issuecomment-504733590).
+<div class="Box-sc-g0xbh4-0 bJMeLZ js-snippet-clipboard-copy-unpositioned" data-hpc="true"><article class="markdown-body entry-content container-lg" itemprop="text"><h1 tabindex="-1" dir="auto"><a id="user-content-real-time-voice-cloning" class="anchor" aria-hidden="true" tabindex="-1" href="#real-time-voice-cloning"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">实时语音克隆</font></font></h1>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">该存储库是使用实时工作的声码器实现</font></font><a href="https://arxiv.org/pdf/1806.04558.pdf" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">从说话者验证到多说话者文本到语音合成 (SV2TTS) 的迁移学习</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">的实现。</font><font style="vertical-align: inherit;">这是我的</font></font><a href="https://matheo.uliege.be/handle/2268.2/6801" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">硕士论文</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SV2TTS是一个分为三个阶段的深度学习框架。</font><font style="vertical-align: inherit;">在第一阶段，人们从几秒钟的音频中创建声音的数字表示。</font><font style="vertical-align: inherit;">在第二和第三阶段，该表示被用作参考来生成给定任意文本的语音。</font></font></p>
+<p dir="auto"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">视频演示</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">（点击图片）：</font></font></p>
+<p dir="auto"><a href="https://www.youtube.com/watch?v=-O_hYhToKoA" rel="nofollow"><img src="https://camo.githubusercontent.com/9d393c1eaab03fb459fc1efb8ad8be3492b19fb6ff8147bfdffbe67d367278f7/68747470733a2f2f692e696d6775722e636f6d2f386c46556c677a2e706e67" alt="工具箱演示" data-canonical-src="https://i.imgur.com/8lFUlgz.png" style="max-width: 100%;"></a></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-papers-implemented" class="anchor" aria-hidden="true" tabindex="-1" href="#papers-implemented"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">论文实施</font></font></h3>
+<table>
+<thead>
+<tr>
+<th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">网址</font></font></th>
+<th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">指定</font></font></th>
+<th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">标题</font></font></th>
+<th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">实现源码</font></font></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/pdf/1806.04558.pdf" rel="nofollow"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1806.04558</font></font></strong></a></td>
+<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SV2TTS</font></font></strong></td>
+<td><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">从说话人验证到多说话人文本语音合成的迁移学习</font></font></strong></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">这个仓库</font></font></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/pdf/1802.08435.pdf" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1802.08435</font></font></a></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">WaveRNN（声码器）</font></font></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">高效的神经音频合成</font></font></td>
+<td><a href="https://github.com/fatchord/WaveRNN"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和弦/WaveRNN</font></font></a></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/pdf/1703.10135.pdf" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1703.10135</font></font></a></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tacotron（合成器）</font></font></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tacotron：走向端到端语音合成</font></font></td>
+<td><a href="https://github.com/fatchord/WaveRNN"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">和弦/WaveRNN</font></font></a></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/pdf/1710.10467.pdf" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1710.10467</font></font></a></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">GE2E（编码器）</font></font></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">用于说话人验证的广义端到端损耗</font></font></td>
+<td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">这个仓库</font></font></td>
+</tr>
+</tbody>
+</table>
+<h2 tabindex="-1" dir="auto"><a id="user-content-heads-up" class="anchor" aria-hidden="true" tabindex="-1" href="#heads-up"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">小心</font></font></h2>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">与深度学习中的其他所有内容一样，这个存储库很快就会过时。</font><font style="vertical-align: inherit;">许多其他开源存储库或 SaaS 应用程序（通常是付费的）将为您提供比此存储库更好的音频质量。</font><font style="vertical-align: inherit;">如果您关心所克隆的声音的保真度及其表现力，以下是一些替代语音克隆解决方案的个人建议：</font></font></p>
+<ul dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">查看</font></font><a href="https://github.com/coqui-ai/tts"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CoquiTTS</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">以获得更新的开源存储库，该存储库具有更好的语音克隆质量和更多功能。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">查看其他存储库的</font></font><a href="https://paperswithcode.com/task/speech-synthesis/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">带有代码的论文</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">以及语音合成领域的最新研究。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">查看</font></font><a href="https://www.resemble.ai/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resemble.ai</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">（免责声明：我在那里工作），轻松轻松地进行最先进的语音克隆。</font></font></li>
+</ul>
+<h2 tabindex="-1" dir="auto"><a id="user-content-setup" class="anchor" aria-hidden="true" tabindex="-1" href="#setup"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">设置</font></font></h2>
+<h3 tabindex="-1" dir="auto"><a id="user-content-1-install-requirements" class="anchor" aria-hidden="true" tabindex="-1" href="#1-install-requirements"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">1. 安装要求</font></font></h3>
+<ol dir="auto">
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Windows 和 Linux 均受支持。</font><font style="vertical-align: inherit;">建议使用 GPU 来进行训练和推理速度，但这不是强制性的。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">推荐使用Python 3.7。</font><font style="vertical-align: inherit;">Python 3.5 或更高版本应该可以工作，但您可能必须调整依赖项的版本。</font><font style="vertical-align: inherit;">我建议使用 设置虚拟环境</font></font><code>venv</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，但这是可选的。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">安装</font></font><a href="https://ffmpeg.org/download.html#get-packages" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ffmpeg</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">这是读取音频文件所必需的。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">安装</font></font><a href="https://pytorch.org/get-started/locally/" rel="nofollow"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PyTorch</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">选择最新的稳定版本、您的操作系统、包管理器（默认为 pip），如果您有 GPU，最后选择任何建议的 CUDA 版本，否则选择 CPU。</font><font style="vertical-align: inherit;">运行给定的命令。</font></font></li>
+<li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">安装其余要求</font></font><code>pip install -r requirements.txt</code></li>
+</ol>
+<h3 tabindex="-1" dir="auto"><a id="user-content-2-optional-download-pretrained-models" class="anchor" aria-hidden="true" tabindex="-1" href="#2-optional-download-pretrained-models"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2.（可选）下载预训练模型</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">现在会自动下载预训练模型。</font><font style="vertical-align: inherit;">如果这不适合您，您可以</font></font><a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning/wiki/Pretrained-models"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在此处</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">手动下载它们。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-3-optional-test-configuration" class="anchor" aria-hidden="true" tabindex="-1" href="#3-optional-test-configuration"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">3.（可选）测试配置</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在下载任何数据集之前，您可以通过以下方式开始测试您的配置：</font></font></p>
+<p dir="auto"><code>python demo_cli.py</code></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">如果所有测试都通过，那么您就可以开始了。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-4-optional-download-datasets" class="anchor" aria-hidden="true" tabindex="-1" href="#4-optional-download-datasets"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">4.（可选）下载数据集</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">对于单独使用工具箱，我只建议下载</font></font><a href="https://www.openslr.org/resources/12/train-clean-100.tar.gz" rel="nofollow"><code>LibriSpeech/train-clean-100</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. </font><font style="vertical-align: inherit;">将内容提取到</font><font style="vertical-align: inherit;">您选择的目录</font></font><code>&lt;datasets_root&gt;/LibriSpeech/train-clean-100</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">中。</font></font><code>&lt;datasets_root&gt;</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">工具箱中支持其他数据集，请参阅</font></font><a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning/wiki/Training#datasets"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">此处</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font><font style="vertical-align: inherit;">您可以不下载任何数据集，但是您将需要自己的数据作为音频文件，或者您必须使用工具箱录制它。</font></font></p>
+<h3 tabindex="-1" dir="auto"><a id="user-content-5-launch-the-toolbox" class="anchor" aria-hidden="true" tabindex="-1" href="#5-launch-the-toolbox"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">5.启动工具箱</font></font></h3>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">然后您可以尝试工具箱：</font></font></p>
+<p dir="auto"><code>python demo_toolbox.py -d &lt;datasets_root&gt;</code><br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+或者</font></font><br>
+<code>python demo_toolbox.py</code></p>
+<p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">取决于您是否下载了任何数据集。</font><font style="vertical-align: inherit;">如果您正在运行 X-server 或者遇到错误</font></font><code>Aborted (core dumped)</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">，请参阅</font></font><a href="https://github.com/CorentinJ/Real-Time-Voice-Cloning/issues/11#issuecomment-504733590" data-hovercard-type="issue" data-hovercard-url="/CorentinJ/Real-Time-Voice-Cloning/issues/11/hovercard"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">此问题</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></p>
+</article></div>
